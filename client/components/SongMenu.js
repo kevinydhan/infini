@@ -4,6 +4,7 @@ import { Table, Typography, Icon } from 'antd'
 
 // Style parameters to be used in React components
 const styles = {
+    borderRadius: { borderRadius: '2em' },
     title: { textAlign: 'center' },
     link: { color: 'black' },
 }
@@ -26,6 +27,7 @@ const SongMenu = props => {
             dataSource={formatSongs(tracks)}
             columns={columns}
             title={renderTitle}
+            style={styles.borderRadius}
             // pagination={false}
         />
     )

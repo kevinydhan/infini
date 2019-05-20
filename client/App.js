@@ -23,6 +23,16 @@ class App extends Component {
     openDrawer = () => this.setState({ drawerVisibility: true })
     closeDrawer = () => this.setState({ drawerVisibility: false })
 
+    checkForPlayer = () => {
+        if (window.Spotify) {
+            this.player = new window.Spotify.Player({
+                name: 'Spotify Infinity Player',
+            })
+
+            this.player.connect()
+        }
+    }
+
     // Retrieves user details, playlists, and top tracks
     componentDidMount() {
         this.props.authenticateUser()
@@ -30,9 +40,11 @@ class App extends Component {
 
     render() {
         if (!this.props.userDetails.id) return <LandingPage />
+
         const { state, props, openDrawer, closeDrawer } = this
         const { tracks, playlistTitle, recommendations } = props
 
+        this.checkForPlayer()
         return (
             <Fragment>
                 <NavBar openDrawer={openDrawer} />
