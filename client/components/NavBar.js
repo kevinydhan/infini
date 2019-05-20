@@ -15,6 +15,10 @@ const NavBar = props => {
             <Menu.Item key='get-recommendations' onClick={getRecommendations}>
                 <Icon type='sync' />
             </Menu.Item>
+
+            <Menu.Item key='manage-exclusions'>
+                <Icon type='stop' />
+            </Menu.Item>
         </Menu>
     )
 }
