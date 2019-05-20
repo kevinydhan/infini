@@ -1,9 +1,14 @@
 import React from 'react'
+import { Button } from 'antd'
 
 const LandingPage = () => {
     return (
         <div>
-            <a href='/login'>Log in with Spotify</a>
+            <a href='/login'>
+                <Button type='primary' shape='round' size='large'>
+                    Log in with Spotify
+                </Button>
+            </a>
         </div>
     )
 }
