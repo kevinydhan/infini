@@ -50,6 +50,7 @@ const getTopTracks = () => {
                     type: UPDATE_PLAYLIST_TRACKS,
                     tracks: res.data.items,
                     playlistTitle: 'Top Tracks',
+                    recommendations: [],
                 })
         })
     }
@@ -66,6 +67,7 @@ export const getPlaylistsTracks = (trackApi, playlistTitle) => {
                         .filter(e => e.track.id) // This is used to filter out any local files
                         .map(e => e.track),
                     playlistTitle: playlistTitle,
+                    recommendations: [], // I have to put this because of my logic in getRecommendations()
                 })
         })
     }

@@ -29,6 +29,7 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 tracks: action.tracks,
                 playlistTitle: action.playlistTitle,
+                recommendations: action.recommendations,
             }
 
         case UPDATE_RECOMMENDATIONS:
