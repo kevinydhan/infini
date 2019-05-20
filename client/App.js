@@ -8,6 +8,9 @@ import { authenticateUser } from './store/creators'
 import LandingPage from './components/LandingPage'
 import PlaylistMenu from './components/PlaylistMenu'
 
+// AntDesign imports
+import 'antd/dist/antd.css'
+
 class App extends Component {
     componentDidMount() {
         this.props.authenticateUser()
