@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getRecommendations } from '../store/creators'
+import { getRecommendations } from '../store/actions'
 import { Menu, Icon } from 'antd'
 
 const NavBar = props => {

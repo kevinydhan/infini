@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 // Redux imports
 import { connect } from 'react-redux'
-import { authenticateUser } from './store/creators'
+import { authenticateUser } from './store/actions'
 
 // React components
 import LandingPage from './components/LandingPage'

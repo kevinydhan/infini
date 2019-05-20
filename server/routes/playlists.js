@@ -24,22 +24,29 @@ router.post('/recommendations', async (req, res, next) => {
         // Generate seed artist query
         const seedArtists = getSeedArtists(req.body.artistIds).join(',')
 
-        const options = {
+        // Retrieve music analyses for given tracks to be used for querying the recommendation API
+        const analyzedTracks = await rp.post({
             method: 'POST',
             uri: 'http://localhost:3000/playlists/analyses',
             body: req.body,
             json: true,
-        }
-
-        // Retrieve music analyses for given tracks to be used for querying the recommendation API
-        const analyzedTracks = await rp.post(options)
+        })
 
         // queryParameters is returned a JS object of Spotify query tags.
         const queryParameters = generateQueryParameters(
             analyzedTracks.audio_features
         )
 
-        // res.json(queryParameters)
+        const url =
+            'https://api.spotify.com/v1/recommendations?' +
+            querystring.stringify({
+                seed_artists: seedArtists,
+                ...queryParameters,
+            })
+
+        const recommendations = await rp.get(createOptions(url))
+
+        res.json(recommendations)
         // res.json(seedArtists) // seedArtists is working
     } catch (err) {
         res.status(400).json(err)

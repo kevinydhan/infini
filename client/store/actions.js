@@ -1,10 +1,15 @@
 import axios from 'axios'
 import store from './store'
-import {
-    AUTHENTICATE_USER,
-    GET_USERS_PLAYLISTS,
-    UPDATE_PLAYLIST_TRACKS,
-} from './types'
+
+// ===================================
+// Action types
+export const AUTHENTICATE_USER = 'AUTHENTICATE_USER'
+export const GET_USERS_PLAYLISTS = 'GET_USERS_PLAYLISTS'
+export const UPDATE_PLAYLIST_TRACKS = 'UPDATE_PLAYLIST_TRACKS'
+export const UPDATE_RECOMMENDATIONS = 'UPDATE_RECOMMENDATIONS'
+
+// ===================================
+// Action creators
 
 // Retrieves user details from server
 export const authenticateUser = () => {
@@ -85,7 +90,14 @@ export const getRecommendations = () => {
     return dispatch => {
         return axios
             .post('/playlists/recommendations', { trackIds, artistIds })
-            .then(res => console.log(res.data))
+            .then(res => {
+                // console.log(res.data) // I might need this later.
+
+                dispatch({
+                    type: UPDATE_RECOMMENDATIONS,
+                    recommendations: res.data.tracks,
+                })
+            })
             .catch(err => console.log(err.response.data))
     }
 }

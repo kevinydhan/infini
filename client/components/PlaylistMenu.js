@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlaylistsTracks } from '../store/creators'
+import { getPlaylistsTracks } from '../store/actions'
 import { Drawer, List, Avatar } from 'antd'
 
 const PlaylistMenu = props => {

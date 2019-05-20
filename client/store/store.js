@@ -1,10 +1,11 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, bindActionCreators } from 'redux'
 import thunk from 'redux-thunk'
 import {
     AUTHENTICATE_USER,
     GET_USERS_PLAYLISTS,
     UPDATE_PLAYLIST_TRACKS,
-} from './types'
+    UPDATE_RECOMMENDATIONS,
+} from './actions'
 
 const initialState = {
     userDetails: {}, // Data about logged in user
@@ -28,6 +29,12 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 tracks: action.tracks,
                 playlistTitle: action.playlistTitle,
+            }
+
+        case UPDATE_RECOMMENDATIONS:
+            return {
+                ...state,
+                recommendations: action.recommendations,
             }
 
         default:
