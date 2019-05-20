@@ -1,4 +1,3 @@
-const rp = require('request-promise')
 const express = require('express')
 const { spotify } = require('../spotify')
 const spotifyConfig = require('../spotify.config')

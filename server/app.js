@@ -27,6 +27,7 @@ app.use(express.static('public'))
     .use(cookieParser())
     .use(cors())
     .use('/me', require('./routes/me'))
+    .use('/playlists', require('./routes/playlists'))
 
 // Renders public/index.html
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')))

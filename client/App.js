@@ -31,7 +31,7 @@ class App extends Component {
     render() {
         if (!this.props.userDetails.id) return <LandingPage />
         const { state, props, openDrawer, closeDrawer } = this
-        const { tracks, playlistTitle } = props
+        const { tracks, playlistTitle, recommendations } = props
 
         return (
             <Fragment>
@@ -41,15 +41,18 @@ class App extends Component {
                     closeDrawer={closeDrawer}
                 />
 
-                <Row>
+                <Row style={{ display: 'flex', justifyContent: 'center' }}>
                     {/* Renders out top tracks or tracks from selected playlist */}
-                    <Col span={12}>
+                    <Col span={11}>
                         <SongMenu tracks={tracks} title={playlistTitle} />
                     </Col>
-
+                    <Col span={1} />
                     {/* Renders out recommended tracks */}
-                    <Col span={12}>
-                        <SongMenu title={'Recommendations'} />
+                    <Col span={11}>
+                        <SongMenu
+                            tracks={recommendations}
+                            title={'Recommendations'}
+                        />
                     </Col>
                 </Row>
             </Fragment>

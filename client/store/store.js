@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import {
     AUTHENTICATE_USER,
     GET_USERS_PLAYLISTS,
-    GET_USERS_TOP_TRACKS,
+    UPDATE_PLAYLIST_TRACKS,
 } from './types'
 
 const initialState = {
@@ -23,7 +23,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_USERS_PLAYLISTS:
             return { ...state, playlists: action.playlists }
 
-        case GET_USERS_TOP_TRACKS:
+        case UPDATE_PLAYLIST_TRACKS: // This is used to render the left SongMenu.
             return {
                 ...state,
                 tracks: action.tracks,

@@ -1,6 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Table, Typography } from 'antd'
+import { Table, Typography, Icon } from 'antd'
+
+// Style parameters to be used in React components
+const styles = {
+    title: { textAlign: 'center' },
+    link: { color: 'black' },
+}
 
 // This array is used to define the SongMenu table with AntDesign.
 const columns = [
@@ -16,6 +22,7 @@ const SongMenu = props => {
 
     return (
         <Table
+            // formatSongs() will reformat Spotify's tracks array of objects to be used in AntDesign's dataSource parameter.
             dataSource={formatSongs(tracks)}
             columns={columns}
             title={renderTitle}
@@ -29,6 +36,7 @@ const formatSongs = songs => {
     return songs.map(song => {
         return {
             key: song.id,
+            play: formatPlay(),
             title: linkify(song.name, song.external_urls.spotify),
             artist: formatArtists(song.artists),
         }
@@ -52,15 +60,22 @@ const formatArtists = artists => {
     ))
 }
 
+// The below function is used to create a play button for the song.
+const formatPlay = () => (
+    <a style={styles.link}>
+        <Icon type='caret-right' />
+    </a>
+)
+
 const linkify = (text, url) => (
-    <a href={url} style={{ color: 'black' }}>
+    <a href={url} style={styles.link}>
         {text}
     </a>
 )
 
 const mapStateToProps = (state, props) => ({
     renderTitle: () => (
-        <div style={{ textAlign: 'center' }}>
+        <div style={styles.title}>
             <Typography.Title level={4}>{props.title}</Typography.Title>
         </div>
     ),
