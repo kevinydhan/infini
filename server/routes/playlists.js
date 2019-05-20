@@ -27,7 +27,7 @@ router.post('/recommendations', async (req, res, next) => {
         // Retrieve music analyses for given tracks to be used for querying the recommendation API
         const analyzedTracks = await rp.post({
             method: 'POST',
-            uri: 'http://localhost:3000/playlists/analyses',
+            uri: 'http://' + req.get('host') + '/playlists/analyses',
             body: req.body,
             json: true,
         })
