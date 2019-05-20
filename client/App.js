@@ -1,9 +1,35 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+
+// Redux imports
+import { connect } from 'react-redux'
+import { authenticateUser } from './store/creators'
+
+// React components
 import LandingPage from './components/LandingPage'
+import PlaylistMenu from './components/PlaylistMenu'
+
 class App extends Component {
+    componentDidMount() {
+        this.props.authenticateUser()
+    }
+
     render() {
-        return <LandingPage />
+        if (!this.props.userDetails.id) return <LandingPage />
+
+        return (
+            <Fragment>
+                <PlaylistMenu />
+            </Fragment>
+        )
     }
 }
 
-export default App
+export default connect(
+    // Maps state to props
+    ({ userDetails }) => ({ userDetails }),
+
+    // Maps dispatch to props
+    dispatch => ({
+        authenticateUser: () => dispatch(authenticateUser()),
+    })
+)(App)
