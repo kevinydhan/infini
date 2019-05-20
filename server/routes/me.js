@@ -6,7 +6,12 @@ const router = express.Router()
 router.get('/', (req, res, next) => {
     spotify
         .getMe()
-        .then(response => res.json(response.body))
+        .then(response =>
+            res.json({
+                ...response.body,
+                accessToken: spotify.getAccessToken(), // Needed for Spotify Playback SDK
+            })
+        )
         .catch(error => {
             console.error(error)
             res.status(error.statusCode).json(error)

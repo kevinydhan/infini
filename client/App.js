@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react'
 // Redux imports
 import { connect } from 'react-redux'
 import { authenticateUser } from './store/actions'
+import { updateCurrentSong } from './store/actions'
 
 // React components
 import LandingPage from './components/LandingPage'
@@ -16,21 +17,53 @@ import { Row, Col } from 'antd'
 
 class App extends Component {
     state = {
+        deviceId: '',
         drawerVisibility: false,
+        trackId: '',
+        trackName: '',
     }
 
     // Functions to toggle playlist drawer
     openDrawer = () => this.setState({ drawerVisibility: true })
     closeDrawer = () => this.setState({ drawerVisibility: false })
 
+    // This function will instantiate new Playback SDK
     checkForPlayer = () => {
         if (window.Spotify) {
             this.player = new window.Spotify.Player({
-                name: 'Spotify Infinity Player',
+                name: 'Infini',
+                getOAuthToken: callback =>
+                    callback(this.props.userDetails.accessToken),
             })
+
+            this.createSDKEventHandlers()
 
             this.player.connect()
         }
+    }
+
+    // Create appropriate event handlers for Playback SDK
+    createSDKEventHandlers = () => {
+        this.player.on('initialization.error', e => console.log(e))
+
+        this.player.on('player_state_changed', state => {
+            this.onSDKStateChange(state)
+        })
+
+        this.player.on('ready', data =>
+            this.setState({ deviceId: data.device_id })
+        )
+    }
+
+    onSDKStateChange = state => {
+        if (!state) return
+        const {
+            current_track,
+            next_tracks,
+            previous_tracks,
+        } = state.track_window
+
+        this.props.updateCurrentSong(current_track)
     }
 
     // Retrieves user details, playlists, and top tracks
@@ -40,14 +73,14 @@ class App extends Component {
 
     render() {
         if (!this.props.userDetails.id) return <LandingPage />
+        if (!this.player) this.checkForPlayer()
 
         const { state, props, openDrawer, closeDrawer } = this
         const { tracks, playlistTitle, recommendations } = props
 
-        this.checkForPlayer()
         return (
             <Fragment>
-                <NavBar openDrawer={openDrawer} />
+                <NavBar openDrawer={openDrawer} player={this.player} />
                 <PlaylistMenu
                     isVisible={state.drawerVisibility}
                     closeDrawer={closeDrawer}
@@ -84,5 +117,7 @@ export default connect(
     // Maps dispatch to props
     dispatch => ({
         authenticateUser: () => dispatch(authenticateUser()),
+        updateCurrentSong: currentTrack =>
+            dispatch(updateCurrentSong(currentTrack)),
     })
 )(App)

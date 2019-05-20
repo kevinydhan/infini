@@ -5,6 +5,7 @@ import {
     GET_USERS_PLAYLISTS,
     UPDATE_PLAYLIST_TRACKS,
     UPDATE_RECOMMENDATIONS,
+    UPDATE_CURRENT_SONG,
 } from './actions'
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
     playlistTitle: '', // Used to label the SongMenu component
     tracks: [], // Array of Spotify track objects, can be either from top tracks or selected playlist
     recommendations: [], // Array of recommended songs based on selected playlist
+    currentTrack: {},
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -36,6 +38,12 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 recommendations: action.recommendations,
+            }
+
+        case UPDATE_CURRENT_SONG:
+            return {
+                ...state,
+                currentTrack: action.currentTrack,
             }
 
         default:

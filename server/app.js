@@ -10,8 +10,11 @@ const { spotify } = require('./spotify')
 const { clientId, clientSecret, redirectUri } = require('./credentials')
 const stateKey = 'spotify_auth_state' // Spotify's state key for cookie
 const scope = [
+    'streaming', // Spotify Playback SDK scopes
     'user-read-email',
-    'user-read-recently-played',
+    'user-read-birthdate',
+    'user-read-private',
+    'user-read-recently-played', // React app scopes
     'user-top-read',
     'playlist-read-private',
     'playlist-modify-private',

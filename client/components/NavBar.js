@@ -12,7 +12,7 @@ const styles = {
 }
 
 const NavBar = props => {
-    const { openDrawer, getRecommendations } = props
+    const { currentTrack, openDrawer, getRecommendations } = props
 
     return (
         <Menu
@@ -48,11 +48,29 @@ const NavBar = props => {
             </Menu.Item>
 
             {/* Album cover */}
-            <Menu.Item>
-                <Avatar shape='square' icon='user' />
-                <span style={styles.paddingLeft}>
-                    Current Song - Current Artist
-                </span>
+
+            {Object.keys(currentTrack).length ? (
+                <Menu.Item>
+                    <Avatar
+                        shape='square'
+                        src={currentTrack.album.images[0].url}
+                    />
+                    <span style={styles.paddingLeft}>
+                        {currentTrack.name} - {currentTrack.artists[0].name}
+                    </span>
+                </Menu.Item>
+            ) : (
+                <Menu.Item>
+                    <Avatar shape='square' />
+                    <span style={styles.paddingLeft}>
+                        Current Song - Current Artist
+                    </span>
+                </Menu.Item>
+            )}
+
+            {/* New finds button */}
+            <Menu.Item key='new-finds' style={styles.right}>
+                <Icon type='play-square' style={styles.iconSize2} />
             </Menu.Item>
 
             {/* Get recommendations button */}
@@ -67,11 +85,13 @@ const NavBar = props => {
     )
 }
 
-const mapDispatchToProps = (dispatch, props) => ({
+const mapStateToProps = ({ currentTrack }) => ({ currentTrack })
+
+const mapDispatchToProps = dispatch => ({
     getRecommendations: () => dispatch(getRecommendations()),
 })
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(NavBar)

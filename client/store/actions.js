@@ -3,10 +3,15 @@ import store from './store'
 
 // ===================================
 // Action types
+
+// Core app actions
 export const AUTHENTICATE_USER = 'AUTHENTICATE_USER'
 export const GET_USERS_PLAYLISTS = 'GET_USERS_PLAYLISTS'
 export const UPDATE_PLAYLIST_TRACKS = 'UPDATE_PLAYLIST_TRACKS'
 export const UPDATE_RECOMMENDATIONS = 'UPDATE_RECOMMENDATIONS'
+
+// Playback SDK actions
+export const UPDATE_CURRENT_SONG = 'UPDATE_CURRENT_SONG'
 
 // ===================================
 // Action creators
@@ -101,5 +106,14 @@ export const getRecommendations = () => {
                 })
             })
             .catch(err => console.log(err.response.data))
+    }
+}
+
+export const updateCurrentSong = currentTrack => {
+    return dispatch => {
+        return dispatch({
+            type: UPDATE_CURRENT_SONG,
+            currentTrack,
+        })
     }
 }
