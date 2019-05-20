@@ -72,6 +72,7 @@ class App extends Component {
     }
 
     render() {
+        // return <LandingPage />
         if (!this.props.userDetails.id) return <LandingPage />
         if (!this.player) this.checkForPlayer()
 
