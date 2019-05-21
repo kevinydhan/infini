@@ -14,3 +14,25 @@
 - Create new playlists containing your new finds
 
 - Listen to your favorite tracks right in the browser
+
+***
+
+### Setup
+
+1. Fork and clone this repository.
+```
+git clone https://github.com/ydhan18/infini.git
+```
+
+2. Change into the directory ``infini`` and install dependencies.
+```
+npm install
+```
+
+3. Start the application. 
+
+   Currently, there is only a development environment set up. *Sorry!*
+
+```
+npm run start:dev
+```
