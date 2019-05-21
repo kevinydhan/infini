@@ -1,4 +1,4 @@
-## infini | *Unlimited Song Recommendations*
+# infini | *Unlimited Song Recommendations*
 **Disclaimer:** We are not affiliated, associated, authorized, endorsed by, or in any way officially connected with Spotify, or any of its subsidiaries or its affiliates.
 
 ***
