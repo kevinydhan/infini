@@ -10,7 +10,7 @@ const PlaylistMenu = props => {
 
     // I would like the playlist title to render its tracks onto the left SongMenu, hence the reason why I am dispatching getPlaylistsTracks.
     const renderPlaylistItem = playlist => {
-        const { name, images, tracks, external_urls } = playlist
+        const { name, images, external_urls } = playlist
 
         return (
             <List.Item>
@@ -52,7 +52,14 @@ const PlaylistMenu = props => {
     )
 }
 
-const mapStateToProps = ({ playlists }) => ({ playlists })
+const filterPlaylists = playlists => {
+    const exclude = ['airy', 'nrb', 'Worship']
+    return playlists.filter(p => !exclude.includes(p.name))
+}
+
+const mapStateToProps = ({ playlists }) => ({
+    playlists: filterPlaylists(playlists),
+})
 
 const mapDispatchToProps = dispatch => ({
     getPlaylistsTracks: (trackApi, playlistTitle) =>

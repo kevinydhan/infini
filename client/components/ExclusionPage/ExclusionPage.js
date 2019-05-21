@@ -41,17 +41,19 @@ const ExclusionPage = props => {
                         </Button>
                     </Button.Group>
                 </Col>
-                <Col span={18} />
+                <Col span={16} />
             </Row>
 
             <Divider>Excluded {selected}</Divider>
 
             <Row>
-                <Col>
+                <Col span={2} />
+                <Col span={20}>
                     {selected === 'Tracks' && <ExcludedTracks />}
                     {selected === 'Artists' && <ExcludedArtists />}
                     {selected === 'Genres' && <ExcludedGenres />}
                 </Col>
+                <Col span={2} />
             </Row>
         </div>
     )

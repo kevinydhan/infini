@@ -93,6 +93,7 @@ app.get('/callback', (req, res) => {
 
                 spotify.setAccessToken(access_token)
                 spotify.setRefreshToken(refresh_token)
+
                 res.redirect('/')
             } else {
                 res.redirect(
