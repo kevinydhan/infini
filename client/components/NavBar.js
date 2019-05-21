@@ -1,15 +1,8 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getRecommendations } from '../store/actions'
 import { Menu, Icon, Avatar } from 'antd'
-
-const styles = {
-    iconSize1: { fontSize: '18px' },
-    iconSize2: { fontSize: '20px' },
-    left: { float: 'left' },
-    right: { float: 'right' },
-    paddingLeft: { paddingLeft: '1em' },
-}
 
 const NavBar = props => {
     const { currentTrack, openDrawer, getRecommendations } = props
@@ -29,9 +22,18 @@ const NavBar = props => {
                 <Icon type='menu' style={styles.iconSize1} />
             </Menu.Item>
 
-            {/* Go to exclusions page button */}
+            {/* Dashboard button */}
+            <Menu.Item key='dashboard' style={styles.left}>
+                <NavLink to='/'>
+                    <Icon type='home' style={styles.iconSize1} />
+                </NavLink>
+            </Menu.Item>
+
+            {/* Exclusions page button */}
             <Menu.Item key='manage-exclusions' style={styles.left}>
-                <Icon type='stop' style={styles.iconSize1} />
+                <NavLink to='/exclusions'>
+                    <Icon type='stop' style={styles.iconSize1} />
+                </NavLink>
             </Menu.Item>
 
             {/* Media control buttons*/}
@@ -83,6 +85,14 @@ const NavBar = props => {
             </Menu.Item>
         </Menu>
     )
+}
+
+const styles = {
+    iconSize1: { fontSize: '18px' },
+    iconSize2: { fontSize: '20px' },
+    left: { float: 'left' },
+    right: { float: 'right' },
+    paddingLeft: { paddingLeft: '1em' },
 }
 
 const mapStateToProps = ({ currentTrack }) => ({ currentTrack })

@@ -1,7 +1,23 @@
 import React from 'react'
 import { Button, Divider } from 'antd'
 
-// I should probably migrate this to SaSS...
+const LandingPage = () => {
+    return (
+        <div style={styles.root}>
+            <div style={styles.title}>infini</div>
+
+            <Divider style={styles.divider} />
+
+            <a href='/login'>
+                <Button shape='round' style={styles.loginButton}>
+                    Log In with Spotify
+                </Button>
+            </a>
+        </div>
+    )
+}
+
+// I should probably migrate this to Sass...
 const spotifyGreen = '#1DB954'
 
 const styles = {
@@ -38,22 +54,6 @@ const styles = {
         backgroundColor: '#262626',
         marginBottom: '60px',
     },
-}
-
-const LandingPage = () => {
-    return (
-        <div style={styles.root}>
-            <div style={styles.title}>infini</div>
-
-            <Divider style={styles.divider} />
-
-            <a href='/login'>
-                <Button shape='round' style={styles.loginButton}>
-                    Log In with Spotify
-                </Button>
-            </a>
-        </div>
-    )
 }
 
 export default LandingPage
