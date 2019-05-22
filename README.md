@@ -5,11 +5,11 @@
 
 ### Features
 
-- Get *potentially* unlimited song recommendations using Spotify Web API
+- Get *potentially* unlimited song recommendations using Spotify's Web API
 
 - Manage your excluded tracks, artists, and genres to refine your search for new music
 
-- *Manage additional recommendation query parameters for further refination (coming soon!)*
+- Manage additional recommendation query parameters for further refination
 
 - Create new playlists containing your new finds
 
@@ -29,10 +29,21 @@ git clone https://github.com/ydhan18/infini.git
 npm install
 ```
 
-3. Start the application. 
+3. ~~Start the application.~~
 
-   Currently, there is only a development environment set up. *Sorry!*
+   You currently cannot run the development server because the client id and secret are not provided.
 
 ```
-npm run start:dev
+~~npm run start:dev~~
 ```
+
+***
+
+### Getting Recommendations
+
+To retrieve recommendations that are catered towards you, infini goes through the following process:
+
+1. A list of songs is sent to:
+
+   ``'https://api.spotify.com/v1/audio-features/?'`` + ``id1,id2,id3...``
+

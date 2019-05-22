@@ -4,12 +4,15 @@ import { connect } from 'react-redux'
 import { getRecommendations } from '../store/actions'
 import { Affix, Menu, Icon, Avatar } from 'antd'
 
-import spotify from '../spotify'
+import SpotifyPlaybackSDK from '../spotify'
 
 const NavBar = props => {
     const { currentTrack, openDrawer, getRecommendations } = props
 
-    console.log(spotify.name)
+    const spotify = new SpotifyPlaybackSDK(props.userDetails.accessToken)
+
+    setTimeout(spotify.create, 10000) // Temporary
+    // Need to look
 
     return (
         <Affix offsetTop={0}>
@@ -101,7 +104,10 @@ const styles = {
     paddingLeft: { paddingLeft: '1em' },
 }
 
-const mapStateToProps = ({ currentTrack }) => ({ currentTrack })
+const mapStateToProps = ({ userDetails, currentTrack }) => ({
+    userDetails,
+    currentTrack,
+})
 
 const mapDispatchToProps = dispatch => ({
     getRecommendations: () => dispatch(getRecommendations()),

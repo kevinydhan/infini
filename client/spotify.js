@@ -1,27 +1,48 @@
-class SpotifyPlaybackSDK {
-    name = 'infini' // Name of your Spotify player
-    deviceId = ''
+import '@babel/polyfill'
 
-    check = () => setInterval(this.create, 3000)
+class SpotifyPlaybackSDK {
+    constructor(accessToken) {
+        this.name = 'infini' // Name of your Spotify player
+        this.accessToken = accessToken // Provided by Spotify's Web API
+
+        this.deviceId = ''
+    }
+
+    // check = () => setInterval(this.create, 1000)
+
+    check = async () => {
+        return new Promise(resolve => {
+            if (window.Spotify) {
+                this.player = new window.Spotify.Player({
+                    name: this.name,
+                    getOAuthToken: callback => callback(this.accessToken),
+                })
+
+                resolve(window.Spotify)
+            } else {
+                window.onSpotifyWebPlaybackSDKReady = () =>
+                    resolve(window.Spotify)
+            }
+        })
+    }
 
     // This function will create a new Spotify Playback SDK
-    create = () => {
-        if (window.Spotify) {
-            clearInterval(this.check)
-            this.player = new window.Spotify.Player({
-                name: this.name,
-                getOAuthToken: callback =>
-                    callback(this.props.userDetails.accessToken),
-            })
+    create = async () => {
+        await this.check()
+        this.createEventHandlers()
+        this.player.connect()
+    }
 
-            this.createSDKEventHandlers()
+    // Create appropriate event handlers for Playback SDK
+    createEventHandlers = () => {
+        this.player.on('ready', data => (this.deviceId = data.device_id))
 
-            this.player.connect()
-            console.log('connected')
-        }
+        this.player.on('initialization.error', e => console.log(e))
+
+        this.player.on('player_state_changed', state => {
+            this.onSDKStateChange(state)
+        })
     }
 }
 
-const spotify = new SpotifyPlaybackSDK()
-
-export default spotify
+export default SpotifyPlaybackSDK
