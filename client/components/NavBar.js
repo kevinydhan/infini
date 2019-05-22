@@ -4,8 +4,12 @@ import { connect } from 'react-redux'
 import { getRecommendations } from '../store/actions'
 import { Affix, Menu, Icon, Avatar } from 'antd'
 
+import spotify from '../spotify'
+
 const NavBar = props => {
     const { currentTrack, openDrawer, getRecommendations } = props
+
+    console.log(spotify.name)
 
     return (
         <Affix offsetTop={0}>

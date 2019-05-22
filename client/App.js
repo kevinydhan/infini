@@ -32,7 +32,7 @@ class App extends Component {
     checkForPlayer = () => {
         if (window.Spotify) {
             this.player = new window.Spotify.Player({
-                name: 'Infini',
+                name: 'infini',
                 getOAuthToken: callback =>
                     callback(this.props.userDetails.accessToken),
             })
@@ -40,6 +40,7 @@ class App extends Component {
             this.createSDKEventHandlers()
 
             this.player.connect()
+            console.log('connected')
         }
     }
 
@@ -76,6 +77,8 @@ class App extends Component {
         // return <LandingPage />
         if (!this.props.userDetails.id) return <LandingPage />
         if (!this.player) this.checkForPlayer()
+
+        // check(this.checkForPlayer)
 
         const { state, openDrawer, closeDrawer } = this
 
