@@ -63,6 +63,9 @@ To retrieve recommendations that are catered towards you, infini goes through th
      "tempo": 123.99
    }
    ```
+   
+   <br/>  
+   
 2. infini generates a query string based on the configurations set by the user. A user can specify whether they would like the ``min_``, ``max_``, and ``target_`` parameters for each feature present in the query string or not.
 
    An example query string would be:
@@ -71,9 +74,12 @@ To retrieve recommendations that are catered towards you, infini goes through th
    
    In addition to these parameters, infini also appends up to 5 seed artists to the query string by calculating the most frequent artists from the list of songs.
    
+   <br/>   
    
 3. The following API call is made using the completed query string:
 
    ``'https://api.spotify.com/v1/recommendations?'`` + ``seed_artists=artist_id1,artist_id2,artist_id3&min_energy=0.0626&target_valance=0.369&max_tempo=123.99...``
-   
+
+   <br/>  
+
 4. The response is returned to infini.
