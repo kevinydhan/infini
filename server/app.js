@@ -77,11 +77,15 @@ app.get('/callback', (req, res) => {
     } else {
         res.clearCookie(stateKey)
 
+        const protocol = req.get('host').includes('localhost')
+            ? 'http://'
+            : 'https://'
+
         var authOptions = {
             url: 'https://accounts.spotify.com/api/token',
             form: {
                 code: code,
-                redirect_uri: 'http://' + req.get('host') + '/callback',
+                redirect_uri: protocol + req.get('host') + '/callback',
                 grant_type: 'authorization_code'
             },
             headers: {
@@ -107,8 +111,7 @@ app.get('/callback', (req, res) => {
                 res.redirect(
                     '/#' +
                         querystring.stringify({
-                            error: 'invalid_token',
-                            status: response.statusCode
+                            error: 'invalid_token'
                         })
                 )
             }
