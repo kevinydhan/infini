@@ -1,13 +1,14 @@
 const path = require('path')
-const request = require('request')
 const cors = require('cors')
 const querystring = require('querystring')
 const cookieParser = require('cookie-parser')
+const request = require('request')
+const session = require('express-session')
 const express = require('express')
+const app = express()
 
-// Spotify utilities
-const { spotify } = require('./spotify')
-const { clientId, clientSecret, redirectUri } = require('./credentials')
+require('dotenv').config()
+
 const stateKey = 'spotify_auth_state' // Spotify's state key for cookie
 const scope = [
     'streaming', // Spotify Playback SDK scopes
@@ -17,38 +18,41 @@ const scope = [
     'user-read-recently-played', // React app scopes
     'user-top-read',
     'playlist-read-private',
-    'playlist-modify-private',
+    'playlist-modify-private'
 ].join(' ')
 
-// Utility functions
-const generateRandomString = require('./misc/generate-random-string')
-
-const app = express()
+const generateRandomString = require('./utils/generate-random-string')
 
 app.use(express.static('public'))
     .use(express.json())
     .use(cookieParser())
     .use(cors())
-    .use('/me', require('./routes/me'))
-    .use('/playlists', require('./routes/playlists'))
+    .use(
+        session({
+            saveUninitialized: false,
+            resave: false,
+            secret: generateRandomString(16)
+        })
+    )
 
-// Renders public/index.html
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')))
 
 app.get('/login', (req, res) => {
     const state = generateRandomString(16)
+
     res.cookie(stateKey, state)
 
-    res.redirect(
+    const url =
         'https://accounts.spotify.com/authorize?' +
-            querystring.stringify({
-                response_type: 'code',
-                client_id: clientId,
-                scope: scope,
-                redirect_uri: redirectUri,
-                state: state,
-            })
-    )
+        querystring.stringify({
+            response_type: 'code',
+            client_id: process.env.CLIENT_ID,
+            scope: scope,
+            redirect_uri: 'http://' + req.get('host') + '/callback',
+            state: state
+        })
+
+    res.redirect(url)
 })
 
 app.get('/callback', (req, res) => {
@@ -63,7 +67,7 @@ app.get('/callback', (req, res) => {
         res.redirect(
             '/#' +
                 querystring.stringify({
-                    error: 'state_mismatch',
+                    error: 'state_mismatch'
                 })
         )
     } else {
@@ -73,17 +77,17 @@ app.get('/callback', (req, res) => {
             url: 'https://accounts.spotify.com/api/token',
             form: {
                 code: code,
-                redirect_uri: redirectUri,
-                grant_type: 'authorization_code',
+                redirect_uri: 'http://' + req.get('host') + '/callback',
+                grant_type: 'authorization_code'
             },
             headers: {
                 Authorization:
                     'Basic ' +
-                    new Buffer(clientId + ':' + clientSecret).toString(
-                        'base64'
-                    ),
+                    new Buffer(
+                        process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
+                    ).toString('base64')
             },
-            json: true,
+            json: true
         }
 
         request.post(authOptions, function(error, response, body) {
@@ -91,15 +95,15 @@ app.get('/callback', (req, res) => {
                 var access_token = body.access_token,
                     refresh_token = body.refresh_token
 
-                spotify.setAccessToken(access_token)
-                spotify.setRefreshToken(refresh_token)
+                req.session.accessToken = access_token
+                req.session.refreshToken = refresh_token
 
                 res.redirect('/')
             } else {
                 res.redirect(
                     '/#' +
                         querystring.stringify({
-                            error: 'invalid_token',
+                            error: 'invalid_token'
                         })
                 )
             }
@@ -116,23 +120,31 @@ app.get('/refresh_token', function(req, res) {
         headers: {
             Authorization:
                 'Basic ' +
-                new Buffer(clientId + ':' + clientSecret).toString('base64'),
+                new Buffer(
+                    process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
+                ).toString('base64')
         },
         form: {
             grant_type: 'refresh_token',
-            refresh_token: refresh_token,
+            refresh_token: refresh_token
         },
-        json: true,
+        json: true
     }
 
     request.post(authOptions, function(error, response, body) {
         if (!error && response.statusCode === 200) {
             var access_token = body.access_token
             res.send({
-                access_token: access_token,
+                access_token: access_token
             })
         }
     })
 })
 
+app.get('/tokens', (req, res) => {
+    res.json({
+        accessToken: req.session.accessToken,
+        refreshToken: req.session.refreshToken
+    })
+})
 module.exports = app

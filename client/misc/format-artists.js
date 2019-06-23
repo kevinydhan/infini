@@ -1,7 +1,11 @@
 import React from 'react'
 import linkify from './linkify'
 
-// The below function is used to create individual external Spotify links for each artist.
+/**
+ * Renders a `<span>` element of all contributing artists with external urls anchored to their name.
+ * @param {Array<Object>} artists - Array of JS objects containing artist information provided by Spotify API
+ */
+
 const formatArtists = artists => {
     return artists.map((artist, index, array) => (
         <span key={artist.id}>

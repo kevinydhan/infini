@@ -1,60 +1,52 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { getRecommendations } from '../store/actions'
 import { Affix, Menu, Icon, Avatar } from 'antd'
 
-import SpotifyPlaybackSDK from '../spotify'
-
 const NavBar = props => {
-    const { currentTrack, openDrawer, getRecommendations } = props
-
-    const spotify = new SpotifyPlaybackSDK(props.userDetails.accessToken)
-
-    setTimeout(spotify.create, 10000) // Temporary
-    // Need to look
+    const currentTrack = {}
+    const { openDrawer, getRecommendations } = props
 
     return (
         <Affix offsetTop={0}>
             <Menu
-                mode='horizontal'
+                mode="horizontal"
                 selectedKeys={[]}
                 style={{ textAlign: 'center' }}
             >
                 {/* Toggle playlist drawer button */}
                 <Menu.Item
-                    key='playlists-menu'
+                    key="playlists-menu"
                     style={styles.left}
                     onClick={openDrawer}
                 >
-                    <Icon type='menu' style={styles.iconSize1} />
+                    <Icon type="menu" style={styles.iconSize1} />
                 </Menu.Item>
 
                 {/* Dashboard button */}
-                <Menu.Item key='dashboard' style={styles.left}>
-                    <NavLink to='/'>
-                        <Icon type='home' style={styles.iconSize1} />
+                <Menu.Item key="dashboard" style={styles.left}>
+                    <NavLink to="/">
+                        <Icon type="home" style={styles.iconSize1} />
                     </NavLink>
                 </Menu.Item>
 
                 {/* Exclusions page button */}
-                <Menu.Item key='manage-exclusions' style={styles.left}>
-                    <NavLink to='/exclusions'>
-                        <Icon type='stop' style={styles.iconSize1} />
+                <Menu.Item key="manage-exclusions" style={styles.left}>
+                    <NavLink to="/exclusions">
+                        <Icon type="stop" style={styles.iconSize1} />
                     </NavLink>
                 </Menu.Item>
 
                 {/* Media control buttons*/}
                 <Menu.Item>
-                    <Icon type='fast-backward' style={styles.iconSize1} />
+                    <Icon type="fast-backward" style={styles.iconSize1} />
                 </Menu.Item>
 
                 <Menu.Item>
-                    <Icon type='caret-right' style={styles.iconSize1} />
+                    <Icon type="caret-right" style={styles.iconSize1} />
                 </Menu.Item>
 
                 <Menu.Item>
-                    <Icon type='fast-forward' style={styles.iconSize1} />
+                    <Icon type="fast-forward" style={styles.iconSize1} />
                 </Menu.Item>
 
                 {/* Album cover */}
@@ -62,7 +54,7 @@ const NavBar = props => {
                 {Object.keys(currentTrack).length ? (
                     <Menu.Item>
                         <Avatar
-                            shape='square'
+                            shape="square"
                             src={currentTrack.album.images[0].url}
                         />
                         <span style={styles.paddingLeft}>
@@ -71,7 +63,7 @@ const NavBar = props => {
                     </Menu.Item>
                 ) : (
                     <Menu.Item>
-                        <Avatar shape='square' />
+                        <Avatar shape="square" />
                         <span style={styles.paddingLeft}>
                             Current Song - Current Artist
                         </span>
@@ -79,17 +71,17 @@ const NavBar = props => {
                 )}
 
                 {/* New finds button */}
-                <Menu.Item key='new-finds' style={styles.right}>
-                    <Icon type='play-square' style={styles.iconSize2} />
+                <Menu.Item key="new-finds" style={styles.right}>
+                    <Icon type="play-square" style={styles.iconSize2} />
                 </Menu.Item>
 
                 {/* Get recommendations button */}
                 <Menu.Item
-                    key='get-recommendations'
+                    key="get-recommendations"
                     style={styles.right}
-                    onClick={getRecommendations}
+                    // onClick={getRecommendations}
                 >
-                    <Icon type='sync' style={styles.iconSize1} />
+                    <Icon type="sync" style={styles.iconSize1} />
                 </Menu.Item>
             </Menu>
         </Affix>
@@ -101,19 +93,7 @@ const styles = {
     iconSize2: { fontSize: '20px' },
     left: { float: 'left' },
     right: { float: 'right' },
-    paddingLeft: { paddingLeft: '1em' },
+    paddingLeft: { paddingLeft: '1em' }
 }
 
-const mapStateToProps = ({ userDetails, currentTrack }) => ({
-    userDetails,
-    currentTrack,
-})
-
-const mapDispatchToProps = dispatch => ({
-    getRecommendations: () => dispatch(getRecommendations()),
-})
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(NavBar)
+export default NavBar

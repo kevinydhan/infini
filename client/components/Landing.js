@@ -1,15 +1,16 @@
 import React from 'react'
+
 import { Button, Divider } from 'antd'
 
-const LandingPage = () => {
+const Landing = () => {
     return (
         <div style={styles.root}>
             <div style={styles.title}>infini</div>
 
             <Divider style={styles.divider} />
 
-            <a href='/login'>
-                <Button shape='round' style={styles.loginButton}>
+            <a href="/login">
+                <Button shape="round" style={styles.loginButton}>
                     Log In with Spotify
                 </Button>
             </a>
@@ -32,7 +33,7 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        fontFamily: 'Rubik',
+        fontFamily: 'Rubik'
     },
     loginButton: {
         backgroundColor: spotifyGreen,
@@ -40,7 +41,7 @@ const styles = {
         textDecoration: 'none',
         fontSize: '20px',
         height: '55px',
-        width: '220px',
+        width: '220px'
     },
     title: {
         padding: '0',
@@ -48,12 +49,12 @@ const styles = {
         fontSize: '130px',
         letterSpacing: '12px',
         color: 'white',
-        textShadow: `0px 30px 30px black`,
+        textShadow: `0px 30px 30px black`
     },
     divider: {
         backgroundColor: '#262626',
-        marginBottom: '60px',
-    },
+        marginBottom: '60px'
+    }
 }
 
-export default LandingPage
+export default Landing

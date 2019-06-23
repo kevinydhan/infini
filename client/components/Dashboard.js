@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+
 import SongMenu from './SongMenu'
+
 import { Row, Col } from 'antd'
 
 const Dashboard = props => {
@@ -12,17 +14,20 @@ const Dashboard = props => {
             <Col span={11}>
                 <SongMenu tracks={tracks} title={playlistTitle} />
             </Col>
+
             <Col span={1} />
+
             {/* Renders out recommended tracks */}
             <Col span={11}>
-                <SongMenu tracks={recommendations} title={'Recommendations'} />
+                {/* <SongMenu tracks={recommendations} title={'Recommendations'} /> */}
             </Col>
         </Row>
     )
 }
 
-export default connect(({ tracks, playlistTitle, recommendations }) => ({
+const mapStateToProps = ({ tracks, playlistTitle }) => ({
     tracks,
-    playlistTitle,
-    recommendations,
-}))(Dashboard)
+    playlistTitle
+})
+
+export default connect(mapStateToProps)(Dashboard)

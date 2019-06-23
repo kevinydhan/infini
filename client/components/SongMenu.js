@@ -26,14 +26,14 @@ const SongMenu = props => {
 const styles = {
     borderRadius: { borderRadius: '2em' },
     title: { textAlign: 'center' },
-    link: { color: 'grey' },
+    link: { color: 'grey' }
 }
 
 // This array is used to define the SongMenu table with AntDesign.
 const columns = [
     { title: '', dataIndex: 'play', key: 'play' },
     { title: 'Title', dataIndex: 'title', key: 'title' },
-    { title: 'Artist', dataIndex: 'artist', key: 'artist' },
+    { title: 'Artist', dataIndex: 'artist', key: 'artist' }
 ]
 
 // The below function is used to restructure the Spotify song object so that it fits AntDesign's table component.
@@ -43,7 +43,7 @@ const formatTracks = songs => {
             key: song.id,
             play: formatPlay(),
             title: linkify(song.name, song.external_urls.spotify),
-            artist: formatArtists(song.artists),
+            artist: formatArtists(song.artists)
         }
     })
 }
@@ -51,16 +51,16 @@ const formatTracks = songs => {
 // The below function is used to create a play button for the song.
 const formatPlay = () => (
     <a style={styles.link}>
-        <Icon type='caret-right' />
+        <Icon type="caret-right" />
     </a>
 )
 
 const mapStateToProps = (state, props) => ({
     renderTitle: () => (
         <div style={styles.title}>
-            <Typography.Title level={4}>{props.title}</Typography.Title>
+            <Typography.Title level={4}>{state.playlistTitle}</Typography.Title>
         </div>
-    ),
+    )
 })
 
 export default connect(mapStateToProps)(SongMenu)
