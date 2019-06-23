@@ -7,6 +7,7 @@ const session = require('express-session')
 const express = require('express')
 const app = express()
 
+const { clientId, clientSecret } = require('./credentials')
 const stateKey = 'spotify_auth_state' // Spotify's state key for cookie
 const scope = [
     'streaming', // Spotify Playback SDK scopes
@@ -18,9 +19,6 @@ const scope = [
     'playlist-read-private',
     'playlist-modify-private'
 ].join(' ')
-
-const clientId = '54522c1f5fa341a78d47efd4f2f97fe3'
-const clientSecret = 'ffd9905d83df49129e4f55ed276a063d'
 
 const generateRandomString = require('./utils/generate-random-string')
 
