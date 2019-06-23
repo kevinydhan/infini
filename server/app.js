@@ -107,7 +107,8 @@ app.get('/callback', (req, res) => {
                 res.redirect(
                     '/#' +
                         querystring.stringify({
-                            error: 'invalid_token'
+                            error: 'invalid_token',
+                            status: response.statusCode
                         })
                 )
             }
