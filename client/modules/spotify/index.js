@@ -1,5 +1,5 @@
 import SpotifyWebApi from 'spotify-web-api-js'
 
-const spotify = new SpotifyWebApi()
+const Spotify = new SpotifyWebApi()
 
-export default spotify
+export default Spotify

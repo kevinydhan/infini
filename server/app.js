@@ -136,4 +136,10 @@ app.get('/refresh_token', function(req, res) {
     })
 })
 
+app.get('/tokens', (req, res) => {
+    res.json({
+        accessToken: req.session.accessToken,
+        refreshToken: req.session.refreshToken
+    })
+})
 module.exports = app
