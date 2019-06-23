@@ -58,7 +58,7 @@ const formatPlay = () => (
 const mapStateToProps = (state, props) => ({
     renderTitle: () => (
         <div style={styles.title}>
-            <Typography.Title level={4}>{props.title}</Typography.Title>
+            <Typography.Title level={4}>{state.playlistTitle}</Typography.Title>
         </div>
     )
 })

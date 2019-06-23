@@ -6,7 +6,8 @@ import { GET_USER_PLAYLISTS, GET_PLAYLISTS_TRACKS } from './actions'
 
 const initialState = {
     playlists: [],
-    tracks: []
+    tracks: [],
+    playlistTitle: 'No playlist selected'
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -15,8 +16,11 @@ const rootReducer = (state = initialState, action) => {
             return { ...state, playlists: action.playlists }
 
         case GET_PLAYLISTS_TRACKS:
-            console.log(action)
-            return { ...state, tracks: action.tracks }
+            return {
+                ...state,
+                tracks: action.tracks,
+                playlistTitle: action.playlistTitle
+            }
 
         default:
             return state

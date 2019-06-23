@@ -7,7 +7,8 @@ const session = require('express-session')
 const express = require('express')
 const app = express()
 
-const { clientId, clientSecret } = require('./credentials')
+require('dotenv').config()
+
 const stateKey = 'spotify_auth_state' // Spotify's state key for cookie
 const scope = [
     'streaming', // Spotify Playback SDK scopes
@@ -45,7 +46,7 @@ app.get('/login', (req, res) => {
         'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
-            client_id: clientId,
+            client_id: process.env.CLIENT_ID,
             scope: scope,
             redirect_uri: 'http://' + req.get('host') + '/callback',
             state: state
@@ -82,7 +83,9 @@ app.get('/callback', (req, res) => {
             headers: {
                 Authorization:
                     'Basic ' +
-                    new Buffer(clientId + ':' + clientSecret).toString('base64')
+                    new Buffer(
+                        process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
+                    ).toString('base64')
             },
             json: true
         }
@@ -117,7 +120,9 @@ app.get('/refresh_token', function(req, res) {
         headers: {
             Authorization:
                 'Basic ' +
-                new Buffer(clientId + ':' + clientSecret).toString('base64')
+                new Buffer(
+                    process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
+                ).toString('base64')
         },
         form: {
             grant_type: 'refresh_token',
