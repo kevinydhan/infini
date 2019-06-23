@@ -42,13 +42,17 @@ app.get('/login', (req, res) => {
 
     res.cookie(stateKey, state)
 
+    const protocol = req.get('host').includes('localhost')
+        ? 'http://'
+        : 'https://'
+
     const url =
         'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
             client_id: process.env.CLIENT_ID,
             scope: scope,
-            redirect_uri: 'http://' + req.get('host') + '/callback',
+            redirect_uri: protocol + req.get('host') + '/callback',
             state: state
         })
 
