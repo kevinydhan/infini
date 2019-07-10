@@ -1,3 +1,9 @@
+/**
+ * Generates a random string of specified number of characters.
+ *
+ * @param {number} length - Number of characters
+ */
+
 const generateRandomString = function(length) {
     var text = ''
     var possible =
