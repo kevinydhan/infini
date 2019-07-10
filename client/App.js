@@ -1,6 +1,5 @@
 import '@babel/polyfill'
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { getUserPlaylists } from './store/actions'
@@ -47,9 +46,6 @@ class App extends Component {
                     isVisible={drawerVisibility}
                     closeDrawer={closeDrawer}
                 />
-
-                {/* App routes */}
-                <Route exact path="/" component={Dashboard} />
             </div>
         )
     }

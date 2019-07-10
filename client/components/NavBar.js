@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import { Affix, Menu, Icon, Avatar } from 'antd'
 
 const NavBar = props => {
@@ -22,18 +21,9 @@ const NavBar = props => {
                     <Icon type="menu" style={styles.iconSize1} />
                 </Menu.Item>
 
-                {/* Dashboard button */}
-                <Menu.Item key="dashboard" style={styles.left}>
-                    <NavLink to="/">
-                        <Icon type="home" style={styles.iconSize1} />
-                    </NavLink>
-                </Menu.Item>
-
                 {/* Exclusions page button */}
                 <Menu.Item key="manage-exclusions" style={styles.left}>
-                    <NavLink to="/exclusions">
-                        <Icon type="stop" style={styles.iconSize1} />
-                    </NavLink>
+                    <Icon type="stop" style={styles.iconSize1} />
                 </Menu.Item>
 
                 {/* Media control buttons*/}
