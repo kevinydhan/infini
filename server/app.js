@@ -6,6 +6,7 @@ const request = require('request')
 const session = require('express-session')
 const express = require('express')
 const app = express()
+const spotify = require('./spotify')
 
 const generateRandomString = require('./utils/generate-random-string')
 const { stateKey, scope, sessionCreds } = require('./server.creds')
@@ -17,6 +18,7 @@ app.use(express.static('public'))
     .use(cookieParser())
     .use(cors())
     .use(session(sessionCreds))
+    .use('/api', require('./api'))
 
 // Render index.html
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')))
@@ -74,11 +76,12 @@ app.get('/callback', (req, res) => {
             json: true
         }
 
-        request.post(authOptions, function(error, response, body) {
+        request.post(authOptions, (error, response, body) => {
             if (!error && response.statusCode === 200) {
-                var access_token = body.access_token,
-                    refresh_token = body.refresh_token
+                const access_token = body.access_token
+                const refresh_token = body.refresh_token
 
+                spotify.setAccessToken(access_token)
                 req.session.accessToken = access_token
                 req.session.refreshToken = refresh_token
 
@@ -99,6 +102,7 @@ app.get('/refresh_token', function(req, res) {
     // requesting access token from refresh token
 
     const refresh_token = req.query.refresh_token
+
     const authOptions = {
         url: 'https://accounts.spotify.com/api/token',
         headers: {
@@ -115,20 +119,11 @@ app.get('/refresh_token', function(req, res) {
         json: true
     }
 
-    request.post(authOptions, function(error, response, body) {
+    request.post(authOptions, (error, response, body) => {
         if (!error && response.statusCode === 200) {
-            var access_token = body.access_token
-            res.send({
-                access_token: access_token
-            })
+            // const access_token = body.access_token
+            res.send({ access_token: body.access_token })
         }
-    })
-})
-
-app.get('/tokens', (req, res) => {
-    res.json({
-        accessToken: req.session.accessToken,
-        refreshToken: req.session.refreshToken
     })
 })
 

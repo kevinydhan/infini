@@ -2,7 +2,8 @@ const path = require('path')
 
 module.exports = {
     devtool: 'eval',
-    entry: './client',
+    mode: 'development',
+    entry: ['@babel/polyfill', './client'],
     output: {
         path: path.join(__dirname, 'public'),
         filename: 'bundle.js'
@@ -13,6 +14,10 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             }
         ]
     }
