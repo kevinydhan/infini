@@ -6,7 +6,7 @@ const request = require('request')
 const session = require('express-session')
 const express = require('express')
 const app = express()
-const spotify = require('./spotify')
+const { spotify } = require('./spotify')
 
 const generateRandomString = require('./utils/generate-random-string')
 const { stateKey, scope, sessionCreds } = require('./server.creds')

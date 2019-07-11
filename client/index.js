@@ -1,30 +1,44 @@
+// React imports
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 
+// Redux imports
+import { Provider, connect } from 'react-redux'
+import store from './store/store'
+import { getMe } from './store/actions'
+
+// Subcomponent imports
 import Landing from './components/Landing'
+import Navigation from './components/Navigation'
 import 'antd/dist/antd.css'
 
-import axios from 'axios'
-
 class App extends Component {
-    state = {
-        isLoggedIn: false
-    }
+    state = { isLoggedIn: false }
 
     async componentDidMount() {
-        const response = await axios.get('/api/me')
-        if (response.data.user_details) {
-            const playlists = await axios.get('/api/me/playlists')
-            console.log(playlists.data.items)
-            this.setState({ isLoggedIn: true })
-        }
+        const user = await this.props.getMe()
+        if (user) this.setState({ isLoggedIn: true })
     }
 
     render() {
         const { isLoggedIn } = this.state
         if (!isLoggedIn) return <Landing />
-        return <div>hi</div>
+        return (
+            <div>
+                <Navigation />
+            </div>
+        )
     }
 }
 
-render(<App />, document.getElementById('app'))
+const ConnectedApp = connect(
+    null,
+    { getMe }
+)(App)
+
+render(
+    <Provider store={store}>
+        <ConnectedApp />
+    </Provider>,
+    document.getElementById('app')
+)

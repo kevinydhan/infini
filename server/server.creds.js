@@ -15,8 +15,8 @@ module.exports = {
     ].join(' '),
 
     sessionCreds: {
-        saveUninitialized: false,
         resave: false,
+        saveUninitialized: false,
         secret: generateRandomString(16)
     }
 }
