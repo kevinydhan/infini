@@ -1,6 +1,6 @@
 {
   "name": "infini",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Song recommender using Spotify Web API",
   "main": "server/server.js",
   "scripts": {
@@ -25,14 +25,14 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
+    "react-virtualized": "^9.21.1",
     "redis": "^2.8.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "spotify-web-api-node": "^4.0.0",
-    "util": "^0.12.1"
+    "spotify-web-api-node": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
