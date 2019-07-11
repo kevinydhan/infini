@@ -2,12 +2,12 @@
 
 **GET** ``/api/me``
 
-Returns user details
+- Gets user details from Spotify Web API
 
 **Status 200:** OK
-```
+```javascript
 {
-    userDetails: {
+    user_details: {
         id: '123456789',
         type: 'user',
         product: 'premium',
@@ -40,10 +40,47 @@ Returns user details
 ```
 
 **Status 404:** Not found
-```
+```javascript
 {
-    userDetails: undefined
+    user_details: undefined
 }
 ```
 
 ***
+
+**GET** ``/api/me/playlists``
+
+- Gets user's playlists and their tracks from Spotify API
+
+**Status 200:** OK
+
+```javascript
+[
+    {
+        collaborative: false,
+        external_urls: {
+
+        },
+        href: 'https://api.spotify.com/v1/playlists/your_playlist_id',
+        id: 'your_playlist_id',
+        images: [
+        
+        ],
+        name: 'Playlist 1',
+        owner: {
+            
+        },
+        primary_color: null,
+        public: false,
+        snapshot_id: 'your_playlist_snapshot_id',
+        tracks: {
+            href: 
+        },
+        type: 'playlist',
+        uri: 'spotify:playlist:your_playlist_id'
+    },
+    {
+        ...
+    }
+]
+```
