@@ -13,7 +13,11 @@ class App extends Component {
 
     async componentDidMount() {
         const response = await axios.get('/api/me')
-        if (response.data.userDetails) this.setState({ isLoggedIn: true })
+        if (response.data.user_details) {
+            const playlists = await axios.get('/api/me/playlists')
+            console.log(playlists.data.items)
+            this.setState({ isLoggedIn: true })
+        }
     }
 
     render() {

@@ -12,13 +12,20 @@ const generateRandomString = require('./utils/generate-random-string')
 const { stateKey, scope, sessionCreds } = require('./server.creds')
 require('dotenv').config()
 
-// Express middleware
+// Body parser
+app.use(express.json())
+
+// Cookie parser and Cors
+app.use(cookieParser())
+app.use(cors())
+
+// Express Session
+app.use(session(sessionCreds))
+
+// API router
+app.use('/api', require('./api'))
+
 app.use(express.static('public'))
-    .use(express.json())
-    .use(cookieParser())
-    .use(cors())
-    .use(session(sessionCreds))
-    .use('/api', require('./api'))
 
 // Render index.html
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')))
@@ -82,8 +89,8 @@ app.get('/callback', (req, res) => {
                 const refresh_token = body.refresh_token
 
                 spotify.setAccessToken(access_token)
-                req.session.accessToken = access_token
-                req.session.refreshToken = refresh_token
+                // req.session.access_token = access_token
+                // req.session.refresh_token = refresh_token
 
                 res.redirect('/')
             } else {
